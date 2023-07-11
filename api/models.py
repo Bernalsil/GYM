@@ -72,9 +72,49 @@ class Cliente(models.Model):
     service = models.CharField(default="", verbose_name="Servicio", max_length=100)
     favorite_meal = models.CharField(default="", verbose_name="", max_length=100)
     img_diet = models.TextField(default="", verbose_name="Dieta", blank=True)
+    is_first_form = models.BooleanField(default=True)
+    my_comments = models.TextField(
+        default="", verbose_name="comentarios", blank=True, null=True
+    )
 
     def __str__(self):
         return self.correo
+
+
+class UserBodyImages(models.Model):
+    user = models.ForeignKey(Cliente, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.TextField(default="")
+
+
+class TrackForm(models.Model):
+    user_id = models.IntegerField(default=0)
+    estatura = models.FloatField(verbose_name="Estatura", default=0, blank=True)
+    peso = models.FloatField(verbose_name="Peso", default=0, blank=True)
+    enfermedades = models.CharField(
+        max_length=250, verbose_name="Enfermedades", default="", blank=True
+    )
+    alergias = models.CharField(
+        max_length=200, verbose_name="Alergias", default="", blank=True
+    )
+    foto_actual = models.TextField(default="")
+    dulces = models.CharField(default="", max_length=20)
+    hr_entrenamiento = models.CharField(max_length=10, blank=True)
+    hr_despertar = models.CharField(max_length=10, blank=True)
+    pago = models.TextField(verbose_name="pago", default="", blank=True)
+    hr_dormir = models.CharField(max_length=20, blank=True)
+    proteinas = models.CharField(
+        max_length=700, verbose_name="Proteinas", default="", blank=True
+    )
+    carbohidratos = models.CharField(
+        max_length=700, verbose_name="Carbohidratos", default="", blank=True
+    )
+
+    objetivo = models.CharField(
+        max_length=300, verbose_name="Objetivo(s)", blank=True, null=True, default=None
+    )
+
+    service = models.CharField(default="", verbose_name="Servicio", max_length=100)
+    favorite_meal = models.CharField(default="", verbose_name="", max_length=100)
 
 
 class Pagos(models.Model):

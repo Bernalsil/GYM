@@ -1,8 +1,7 @@
 from django.views import View
 import json
 from django.http import JsonResponse, HttpResponse
-from stripe import Price
-from .models import Cliente, AboutInfo, Experiences, Prices
+from .models import Cliente, AboutInfo, Experiences, Prices, UserBodyImages, TrackForm
 from django.db.models import Q
 from django.forms.models import model_to_dict
 
@@ -18,6 +17,15 @@ class AboutInfoView(View):
         return HttpResponse("oki", status=200)
 
 
+class ClientCommentsView(View):
+    def post(self, request, user_id):
+        jd = json.loads(request.body)
+        client = Cliente.objects.get(id=user_id)
+        client.my_comments = jd["comments"]
+        client.save()
+        return HttpResponse("OKi", status=200)
+
+
 class Formulario(View):
     def get(self, request):
         return JsonResponse({"message": "nice"})
@@ -29,7 +37,10 @@ class Formulario(View):
         try:
             client = Cliente.objects.get(Q(correo=email) | Q(telefono=phone))
             client.__dict__.update(jd)
+            client.is_first_form = False
             client.save()
+            image_body = jd["foto_actual"]
+            UserBodyImages.objects.create(user=client, image=image_body)
             return HttpResponse("OK", status=200)
         except Cliente.DoesNotExist:
             return HttpResponse("bad", status=404)
@@ -91,6 +102,13 @@ class Exps(View):
         return HttpResponse("oki", status=200)
 
 
+class UserImagesView(View):
+    def get(self, request, user_id):
+        user_images = UserBodyImages.objects.filter(user__id=user_id)
+        data = [model_to_dict(image) for image in user_images][::-1]
+        return JsonResponse({"user_images": data})
+
+
 class ClientsView(View):
     def get(self, request, client_id=0):
         if client_id > 0:
@@ -111,4 +129,14 @@ class ClientsView(View):
         if len(jd["img_diet"]) > 0:
             client.img_diet = jd["img_diet"]
         client.save()
+        return HttpResponse("oki", status=200)
+
+
+class TrackFormView(View):
+    def post(self, request):
+        jd = json.loads(request.body)
+        TrackForm.objects.create(**jd)
+        image_body = jd["foto_actual"]
+        client = Cliente.objects.get(id=jd["user_id"])
+        UserBodyImages.objects.create(user=client, image=image_body)
         return HttpResponse("oki", status=200)
