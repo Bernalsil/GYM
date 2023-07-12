@@ -1,0 +1,3 @@
+.card-container {
+  @apply relative cursor-pointer flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg hover:bg-black hover:-translate-y-3 transition duration-300;
+}
