@@ -33,6 +33,11 @@ urlpatterns = [
     ),
     path("clients", csrf_exempt(ClientsView.as_view()), name="Test"),
     path("track_form", csrf_exempt(TrackFormView.as_view()), name="trackform"),
+    path(
+        "track_form/<int:user_id>",
+        csrf_exempt(TrackFormView.as_view()),
+        name="trackform",
+    ),
     path("prices", csrf_exempt(PricesView.as_view()), name="Test"),
     path("clients/<int:client_id>", csrf_exempt(ClientsView.as_view()), name="Test"),
 ]

@@ -140,3 +140,7 @@ class TrackFormView(View):
         client = Cliente.objects.get(id=jd["user_id"])
         UserBodyImages.objects.create(user=client, image=image_body)
         return HttpResponse("oki", status=200)
+
+    def get(self, request, user_id):
+        tracks = list(TrackForm.objects.filter(user_id=user_id).values())[::-1]
+        return JsonResponse({"tracks": tracks})
