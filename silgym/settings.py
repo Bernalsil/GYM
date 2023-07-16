@@ -35,6 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://misifusa.ddns.net",
 ]
 
+CORS_ALLOWED_ORIGINS = ["https://misifusa.ddns.net"]
 # Application definition
 
 INSTALLED_APPS = [
