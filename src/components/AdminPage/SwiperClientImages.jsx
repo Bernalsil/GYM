@@ -26,29 +26,34 @@ const SwiperClientImages = ({ user_id }) => {
 
   return (
     <div className="max-w-lg mx-auto">
-      <Swiper
-        navigation={true}
-        spaceBetween={50}
-        modules={[Pagination, Navigation, Autoplay]}
-        className="max-w-[350px]"
-      >
-        {images.map((image, i) => (
-          <SwiperSlide key={i} className="">
-            <div className="w-full  ">
-              <img
-                onClick={() => window.open(image.image, "_blank")}
-                src={image.image}
-                className="w-full"
-                alt=""
-              />
+      {images.length > 0 && (
+        <>
+          <div className="mt-3 mb-3">Fotos</div>
+          <Swiper
+            navigation={true}
+            spaceBetween={50}
+            modules={[Pagination, Navigation, Autoplay]}
+            className="max-w-[350px]"
+          >
+            {images.map((image, i) => (
+              <SwiperSlide key={i} className="">
+                <div className="w-full  ">
+                  <img
+                    onClick={() => window.open(image.image, "_blank")}
+                    src={image.image}
+                    className="w-full"
+                    alt=""
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+            <div className="flex justify-between font-bold italic">
+              <div className="badge badge-info">Mas reciente</div>
+              <div className="badge badge-info">Mas antigua</div>
             </div>
-          </SwiperSlide>
-        ))}
-        <div className="flex justify-between font-bold italic">
-          <div className="badge badge-info">Mas reciente</div>
-          <div className="badge badge-info">Mas antigua</div>
-        </div>
-      </Swiper>
+          </Swiper>
+        </>
+      )}
     </div>
   );
 };

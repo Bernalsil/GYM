@@ -47,7 +47,7 @@ const NavBar = () => {
         // style={{ backgroundColor: "#f0db4f" }}
       >
         <div className="container  flex flex-wrap items-center justify-between mx-auto">
-          <a href="https://flowbite.com/" className="flex items-center">
+          <a href="#" className="flex items-center">
             <img
               src={logo}
               //   style={{ width: "50px" }}
