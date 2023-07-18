@@ -128,7 +128,7 @@ const Tracking = () => {
                     </div>
 
                     <div className="mt-2">
-                      <span className="font-bold">Service:</span>
+                      <span className="font-bold">Servicio:</span>
                       <span>{tracking.service}</span>
                     </div>
 
