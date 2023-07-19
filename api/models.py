@@ -112,6 +112,7 @@ class TrackForm(models.Model):
     objetivo = models.CharField(
         max_length=300, verbose_name="Objetivo(s)", blank=True, null=True, default=None
     )
+    pago = models.TextField(verbose_name="pago", default="", blank=True)
 
     service = models.CharField(default="", verbose_name="Servicio", max_length=100)
     favorite_meal = models.CharField(default="", verbose_name="", max_length=100)
