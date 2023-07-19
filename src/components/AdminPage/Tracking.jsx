@@ -13,7 +13,7 @@ const Tracking = () => {
   const { user } = useContext(AuthContext);
   const getTrackings = () => {
     axios.get(`${api}/track_form/${user.id}`).then((res) => {
-      //   console.log(res.tracking.tracks);
+      console.log(res.data.tracks);
       setTrackings(res.data.tracks);
     });
   };
@@ -44,16 +44,6 @@ const Tracking = () => {
                 <div key={tracking.id}>
                   <div className="p-4 text-white">
                     <h1 className="text-2xl font-bold">Estadísticas</h1>
-
-                    {/* <div className="mt-4">
-                    <span className="font-bold">ID:</span>
-                    <span>{tracking.id}</span>
-                  </div> */}
-                    {/* 
-                  <div className="mt-2">
-                    <span className="font-bold">User ID:</span>
-                    <span>{tracking.user_id}</span>
-                  </div> */}
 
                     <div className="mt-2">
                       <span className="font-bold">Estatura:</span>
