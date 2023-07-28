@@ -226,7 +226,7 @@ const ClientInfo = () => {
                 <div>
                   {img_diet.length > 0
                     ? "Imagen seleccionada"
-                    : "Subir imagen dieta"}
+                    : "Subir imagen dietas"}
                 </div>
               </div>
             </div>
