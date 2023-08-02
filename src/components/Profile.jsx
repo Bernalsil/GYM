@@ -7,9 +7,11 @@ import AuthContext from "../context/AuthContext";
 import bg from "./media/lockers.jpg";
 import SwiperClientImages from "./AdminPage/SwiperClientImages";
 import { toast } from "react-hot-toast";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 const Profile = () => {
   const [client, setClient] = useState({});
   const [comments, setComments] = useState("");
+  const [ableComments, setableComments] = useState(true);
   const { logoutUser } = useContext(AuthContext);
   const params = useParams();
   const getClient = () => {
@@ -28,6 +30,8 @@ const Profile = () => {
       .then((res) => {
         console.log(res);
         toast.success("Envio exitoso");
+        setableComments(false);
+        setComments("");
       })
       .catch((err) => console.log(err));
   };
@@ -76,6 +80,7 @@ const Profile = () => {
           </div>
         )}
       </div>
+
       <div className="max-w-lg text-white flex flex-wrap justify-center mx-auto ">
         <div className="flex mb-10 flex-wrap gap-3 justify-center items-center  text-center">
           {client.imageTraining && client.imageTraining.length > 0 && (
@@ -102,32 +107,56 @@ const Profile = () => {
             </div>
           )}
         </div>
-        <div className="max-w-lg mx-auto text-center">
+        <div className="text-center mt-5 mb-10 ">
+          <Link to="/contact-form">
+            <button className="link link-info ">
+              Ingresa al siguiente link y ingresa la información que se te pide
+            </button>
+          </Link>
+        </div>
+        <div className="w-full mx-auto text-center">
           <div className="font-bold ">Observaciones del entrenador </div>
           <p className="italic">{client.trainer_comments}</p>
         </div>
       </div>
+
       <div className="flex justify-center mx-auto gap-3 flex-col max-w-lg items-center">
         <div className="text-white font-bold mt-5">
           Enviar commentarios/dudas
         </div>
         <textarea
           onChange={(e) => setComments(e.target.value)}
+          value={comments}
           className="textarea textarea-warning"
           placeholder="dudas/comentarios"
         ></textarea>
-        <button onClick={sendComments} className="btn btn-success">
-          Enviar
-        </button>
+        {ableComments ? (
+          <button
+            onClick={sendComments}
+            disabled={comments.length === 0}
+            className="btn btn-success"
+          >
+            Enviar
+          </button>
+        ) : (
+          <div className="bg-teal-500 flex items-center gap-3 text-black p-3 rounded-lg">
+            <svg
+              viewBox="0 0 1024 1024"
+              fill="currentColor"
+              height="1em"
+              width="1em"
+              className="w-5 h-5"
+            >
+              <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm193.5 301.7l-210.6 292a31.8 31.8 0 01-51.7 0L318.5 484.9c-3.8-5.3 0-12.7 6.5-12.7h46.9c10.2 0 19.9 4.9 25.9 13.3l71.2 98.8 157.2-218c6-8.3 15.6-13.3 25.9-13.3H699c6.5 0 10.3 7.4 6.5 12.7z" />
+            </svg>
+            <span>Comentarios enviados!</span>
+          </div>
+        )}
       </div>
       <div className="mt-12">
         <SwiperClientImages user_id={params.user_id} />
       </div>
-      <div className="text-center mt-5">
-        <Link to="/contact-form">
-          <button className="link link-info ">Formato seguimiento</button>
-        </Link>
-      </div>
+
       <div className="text-center mt-5">
         <button onClick={logoutUser} className="btn btn-error capitalize">
           Cerrar Sesion
