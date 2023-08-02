@@ -37,30 +37,34 @@ const TrackForm = () => {
   const navigate = useNavigate();
 
   const handleData = (data) => {
-    const newData = {
-      ...data,
-      user_id: user.id,
-      hr_entrenamiento: hr_training,
-      hr_despertar: hr_wake,
-      hr_dormir: hr_sleep,
-      carbohidratos: list1.join(","),
-      proteinas: list2.join(","),
-      foto_actual: imageBody,
-      pago: payment,
-      service: listService.join(","),
-    };
-    console.log(newData);
-    axios
-      .post(`${api}/track_form`, newData)
-      .then((res) => {
-        console.log(res.data);
-        toast.success("Información enviada con éxito");
-        navigate(`/profile/${user.id}`);
-      })
-      .catch((err) => {
-        toast.error("Algo salio mal intenta de nuevo");
-        console.log(err);
-      });
+    if (listService.length != 0) {
+      const newData = {
+        ...data,
+        user_id: user.id,
+        hr_entrenamiento: hr_training,
+        hr_despertar: hr_wake,
+        hr_dormir: hr_sleep,
+        carbohidratos: list1.join(","),
+        proteinas: list2.join(","),
+        foto_actual: imageBody,
+        pago: payment,
+        service: listService.join(","),
+      };
+      console.log(newData);
+      axios
+        .post(`${api}/track_form`, newData)
+        .then((res) => {
+          console.log(res.data);
+          toast.success("Información enviada con éxito");
+          navigate(`/profile/${user.id}`);
+        })
+        .catch((err) => {
+          toast.error("Algo salio mal intenta de nuevo");
+          console.log(err);
+        });
+    } else {
+      toast.error("Llena todos los campos");
+    }
   };
   const {
     handleSubmit,
