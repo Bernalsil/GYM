@@ -11,12 +11,12 @@ import { toast } from "react-hot-toast";
 import bg from "./media/bgform.jpg";
 const carbs = ["arroz", "papa", "pastas", "tortilla", "camote", "pan"];
 const proteins = [
-  "res",
-  "huevo",
-  "pez",
-  "muslo pollo",
-  "pechuga pollo",
-  "lomo cerdo",
+  "Res",
+  "Huevo",
+  "Pescado",
+  "Muslo de pollo",
+  "Pechuga de pollo",
+  "Lomo de cerdo",
 ];
 const services = ["entrenamiento", "dieta", "fármacos"];
 const FormContact = () => {
@@ -169,7 +169,7 @@ const FormContact = () => {
               className="select select-warning w-full max-w-xs"
             >
               <option disabled selected>
-                Elige tu genero
+                Genero
               </option>
               <option value={"femenino"}>Femenino</option>
               <option value={"masculino"}>Masculino</option>
@@ -180,7 +180,7 @@ const FormContact = () => {
               htmlFor="inputField"
               className="block mb-2 text-lg font-bold "
             >
-              Fecha nacimiento:
+              Fecha de nacimiento:
             </label>
             <input
               type="date"
@@ -207,7 +207,7 @@ const FormContact = () => {
               htmlFor="inputField"
               className="block mb-2 text-lg font-bold "
             >
-              Numero celular:
+              Numero de celular:
             </label>
             <input
               id="inputField"
@@ -235,7 +235,7 @@ const FormContact = () => {
               htmlFor="inputField"
               className="block mb-2 text-lg font-bold "
             >
-              Estatura:
+              Estatura en centimetros:
             </label>
             <input
               id="inputField"
@@ -300,7 +300,7 @@ const FormContact = () => {
               className="select select-warning w-full max-w-xs"
             >
               <option disabled selected>
-                Elige tipo de dulce
+                Elige tipo de dulce o salado
               </option>
               <option value={"salado"}>Salado</option>
               <option value={"dulce"}>Dulce</option>
@@ -375,12 +375,12 @@ const FormContact = () => {
               htmlFor="inputField"
               className="block mb-2 text-lg font-bold "
             >
-              objetivo a cumplir:
+              ¿Cual es tu objetivo que deseas en este proceso??:
             </label>
             <input
               id="inputField"
               type="text"
-              placeholder="Dejar en blanco si no tienes enfermedades"
+              placeholder="Ej. bajar de peso, aumento en masa muscular"
               className="input input-bordered input-warning w-full max-w-xs"
               {...register("objetivo", { required: true })}
             />
