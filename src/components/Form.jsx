@@ -8,6 +8,7 @@ import bg from "./media/loginbg.jpg";
 const Form = () => {
   const [format, setFormat] = useState("Login");
   const { loginUser } = useContext(AuthContext);
+  const [clockSelected, setClockSelected] = useState(-1);
   const {
     handleSubmit,
     register,
@@ -38,12 +39,12 @@ const Form = () => {
           backgroundImage: `linear-gradient(rgba(4, 4, 4, 0.696), rgba(12, 12, 12, 0.77)), url(${bg})`,
         }}
       >
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center  items-center h-screen">
           <div className="bg-yellow-500 bg-opacity-70 text-black p-10 rounded-lg shadow-md w-80">
-            <h1 className="text-3xl font-semibold mb-5">
+            <h1 className="text-3xl text-white font-semibold mb-5">
               {format === "Login" ? "Ingreso" : "Registro"}
             </h1>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="text-white">
               {format === "Login" && (
                 <div className="mb-4">
                   <label

@@ -7,7 +7,6 @@ import AuthContext from "../context/AuthContext";
 import bg from "./media/lockers.jpg";
 import SwiperClientImages from "./AdminPage/SwiperClientImages";
 import { toast } from "react-hot-toast";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 const Profile = () => {
   const [client, setClient] = useState({});
   const [comments, setComments] = useState("");

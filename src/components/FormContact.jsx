@@ -21,6 +21,7 @@ const proteins = [
 const services = ["entrenamiento", "dieta", "fármacos"];
 const FormContact = () => {
   const { list: list1, toggleList: toggleList1 } = useToggleList([]);
+  const [clockSelected, setClockSelected] = useState(-1);
   const { list: list2, toggleList: toggleList2 } = useToggleList([]);
   const { list: listService, toggleList: toggleListService } = useToggleList(
     []
@@ -37,30 +38,32 @@ const FormContact = () => {
   const navigate = useNavigate();
 
   const handleData = (data) => {
-    const newData = {
-      ...data,
-      hr_entrenamiento: hr_training,
-      hr_despertar: hr_wake,
-      hr_dormir: hr_sleep,
-      carbohidratos: list1.join(","),
-      proteinas: list2.join(","),
-      foto_actual: imageBody,
-      pago: payment,
-      service: listService.join(","),
-    };
-    axios
-      .post(`${api}/form`, newData)
-      .then((res) => {
-        console.log(res.data);
-        toast.success("Información enviada con éxito");
-        navigate(`/profile/${user.id}`);
-      })
-      .catch((err) => {
-        toast.error(
-          "Algo salio mal intenta de nuevo,revisa que tu email y numero de celular sean correctos"
-        );
-        console.log(err);
-      });
+    if (list1.length !== 0 && list2.length !== 0 && listService.length !== 0) {
+      const newData = {
+        ...data,
+        hr_entrenamiento: hr_training,
+        hr_despertar: hr_wake,
+        hr_dormir: hr_sleep,
+        carbohidratos: list1.join(","),
+        proteinas: list2.join(","),
+        foto_actual: imageBody,
+        pago: payment,
+        service: listService.join(","),
+      };
+      axios
+        .post(`${api}/form`, newData)
+        .then((res) => {
+          console.log(res.data);
+          toast.success("Información enviada con éxito");
+          navigate(`/profile/${user.id}`);
+        })
+        .catch((err) => {
+          toast.error(
+            "Algo salio mal intenta de nuevo,revisa que tu email y numero de celular sean correctos"
+          );
+          console.log(err);
+        });
+    }
   };
   const {
     handleSubmit,
@@ -375,7 +378,7 @@ const FormContact = () => {
               htmlFor="inputField"
               className="block mb-2 text-lg font-bold "
             >
-              ¿Cual es tu objetivo que deseas en este proceso??:
+              ¿Cual es tu objetivo que deseas en este proceso?:
             </label>
             <input
               id="inputField"
@@ -403,8 +406,11 @@ const FormContact = () => {
           <div id="hr_training" className="">
             <div>
               <button
-                onClick={() => setShowTimeTraining(!showTimeTraining)}
-                className="btn btn-sm"
+                onClick={() => {
+                  setShowTimeTraining(!showTimeTraining);
+                  setClockSelected(0);
+                }}
+                className={`btn btn-sm ${clockSelected === 0 && "btn-success"}`}
                 type="button"
               >
                 {showTimeTraining
@@ -424,8 +430,11 @@ const FormContact = () => {
             <div>
               <button
                 type="button"
-                onClick={() => setShowTimeWake(!showTimeWake)}
-                className="btn btn-sm"
+                onClick={() => {
+                  setShowTimeWake(!showTimeWake);
+                  setClockSelected(1);
+                }}
+                className={`btn btn-sm ${clockSelected === 1 && "btn-success"}`}
               >
                 {showTimeWake ? "ocultar Reloj" : "-Elegir hora de despertar-"}
               </button>
@@ -442,8 +451,11 @@ const FormContact = () => {
             <div>
               <button
                 type="button"
-                onClick={() => setShowTimeSlepp(!showTimeSlepp)}
-                className="btn btn-sm"
+                onClick={() => {
+                  setShowTimeSlepp(!showTimeSlepp);
+                  setClockSelected(2);
+                }}
+                className={`btn btn-sm ${clockSelected === 2 && "btn-success"}`}
               >
                 {showTimeSlepp ? "ocultar Reloj" : "-Elegir hora de dormir-"}
               </button>

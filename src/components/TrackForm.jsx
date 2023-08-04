@@ -34,36 +34,39 @@ const TrackForm = () => {
   const [showTimeWake, setShowTimeWake] = useState(false);
   const [hr_sleep, setHr_sleep] = useState("10:00");
   const [showTimeSlepp, setShowTimeSlepp] = useState(false);
+  const [clockSelected, setClockSelected] = useState(-1);
   const navigate = useNavigate();
 
   const handleData = (data) => {
-    if (listService.length != 0) {
-      const newData = {
-        ...data,
-        user_id: user.id,
-        hr_entrenamiento: hr_training,
-        hr_despertar: hr_wake,
-        hr_dormir: hr_sleep,
-        carbohidratos: list1.join(","),
-        proteinas: list2.join(","),
-        foto_actual: imageBody,
-        pago: payment,
-        service: listService.join(","),
-      };
-      console.log(newData);
-      axios
-        .post(`${api}/track_form`, newData)
-        .then((res) => {
-          console.log(res.data);
-          toast.success("Información enviada con éxito");
-          navigate(`/profile/${user.id}`);
-        })
-        .catch((err) => {
-          toast.error("Algo salio mal intenta de nuevo");
-          console.log(err);
-        });
-    } else {
-      toast.error("Llena todos los campos");
+    if (list1.length !== 0 && list2.length !== 0 && listService.length !== 0) {
+      if (listService.length != 0) {
+        const newData = {
+          ...data,
+          user_id: user.id,
+          hr_entrenamiento: hr_training,
+          hr_despertar: hr_wake,
+          hr_dormir: hr_sleep,
+          carbohidratos: list1.join(","),
+          proteinas: list2.join(","),
+          foto_actual: imageBody,
+          pago: payment,
+          service: listService.join(","),
+        };
+        console.log(newData);
+        axios
+          .post(`${api}/track_form`, newData)
+          .then((res) => {
+            console.log(res.data);
+            toast.success("Información enviada con éxito");
+            navigate(`/profile/${user.id}`);
+          })
+          .catch((err) => {
+            toast.error("Algo salio mal intenta de nuevo");
+            console.log(err);
+          });
+      } else {
+        toast.error("Llena todos los campos");
+      }
     }
   };
   const {
@@ -262,8 +265,11 @@ const TrackForm = () => {
           <div id="hr_training" className="">
             <div>
               <button
-                onClick={() => setShowTimeTraining(!showTimeTraining)}
-                className="btn btn-sm"
+                onClick={() => {
+                  setShowTimeTraining(!showTimeTraining);
+                  setClockSelected(0);
+                }}
+                className={`btn btn-sm ${clockSelected === 0 && "btn-success"}`}
                 type="button"
               >
                 {showTimeTraining
@@ -283,8 +289,11 @@ const TrackForm = () => {
             <div>
               <button
                 type="button"
-                onClick={() => setShowTimeWake(!showTimeWake)}
-                className="btn btn-sm"
+                onClick={() => {
+                  setShowTimeWake(!showTimeWake);
+                  setClockSelected(1);
+                }}
+                className={`btn btn-sm ${clockSelected === 1 && "btn-success"}`}
               >
                 {showTimeWake ? "ocultar Reloj" : "-Elegir hora de despertar-"}
               </button>
@@ -301,8 +310,11 @@ const TrackForm = () => {
             <div>
               <button
                 type="button"
-                onClick={() => setShowTimeSlepp(!showTimeSlepp)}
-                className="btn btn-sm"
+                onClick={() => {
+                  setShowTimeSlepp(!showTimeSlepp);
+                  setClockSelected(2);
+                }}
+                className={`btn btn-sm ${clockSelected === 2 && "btn-success"}`}
               >
                 {showTimeSlepp ? "ocultar Reloj" : "-Elegir hora de dormir-"}
               </button>
